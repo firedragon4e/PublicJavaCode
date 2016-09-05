@@ -36,8 +36,8 @@ public class _01_02_Array{
     
     public static double koerpergroesseEingeben(String txt){
         System.out.println(txt);
-        double name = Double.parseDouble(scanner());
-        return name;
+        double groesse = Double.parseDouble(scanner());
+        return groesse;
     }
     
     public static int setX(String input){
@@ -58,111 +58,38 @@ public class _01_02_Array{
         return a;
     }
     
-    public static void ausgabeTabelle(int[] x, int mp, String[] name, double[] groesse){
-        if(mp == 0){
-            System.out.println("Name\t|\tK\u00F6rpergr\u00F6\u00DFe");
-            System.out.println("===========================");
-        }else if(mp == 1){
-            System.out.println("Name\t\t|\tK\u00F6rpergr\u00F6\u00DFe");
-            System.out.println("===================================");
-        }else if(mp == 2){
-            System.out.println("Name\t\t\t|\tK\u00F6rpergr\u00F6\u00DFe");
-            System.out.println("===========================================");
-        }else if(mp == 3){
-            System.out.println("Name\t\t\t\t|\tK\u00F6rpergr\u00F6\u00DFe");
-            System.out.println("===================================================");
-        }else if(mp == 4){
-            System.out.println("Name\t\t\t\t\t|\tK\u00F6rpergr\u00F6\u00DFe");
-            System.out.println("===========================================================");
-        }else if (mp == 5){
-            System.out.println("Name\t\t\t\t\t\t|\tK\u00F6rpergr\u00F6\u00DFe");
-            System.out.println("===================================================================");
+    public static String mkDynamic(String txtBase, String txtExtend, int x){
+        String dynTxt = txtBase;
+        for(int i = 0; i <= x; i++){
+            dynTxt += txtExtend; 
         }
-        
+        return dynTxt;
+    }
+    
+    public static double durchschnittErmitteln(double[] groesse){
+        double durchschnitt, summe = 0.0;
+        for(double i : groesse){
+            summe += i;
+        }
+        durchschnitt = (summe / groesse.length) * 100;
+        int d2i = (int) durchschnitt;
+        durchschnitt = (double) d2i / 100;
+        return durchschnitt;
+    }
+    
+    public static void ausgabeTabelle(int[] x, int mp, String[] name, double[] groesse, double avg){
+        String txtBaseH = "========================";
+        String txtExtendedH = "========";
+        String txtBaseT = "\t";
+        String txtExtendedT = "\t";
+        System.out.println("Name" + mkDynamic(txtBaseT, txtExtendedT, (mp)) + "|    K\u00F6rpergr\u00F6\u00DFe");
+        System.out.println(mkDynamic(txtBaseH, txtExtendedH, (mp)));
         for(int i = 0; i < name.length; i++){
-            if(x[i] == 5){
-                switch(mp){
-                    case 5:
-                        System.out.println(name[i] + "\t|\t" + groesse[i] + "cm");
-                        break;
-                }
-            }else if(x[i] == 4){
-                switch(mp){
-                    case 4:
-                        System.out.println(name[i] + "\t|\t" + groesse[i] + "cm");
-                        break;
-                    case 5:
-                        System.out.println(name[i] + "\t\t|\t" + groesse[i] + "cm");
-                        break;
-                }
-            }else if(x[i] == 3){
-                switch(mp){
-                    case 3:
-                        System.out.println(name[i] + "\t|\t" + groesse[i] + "cm");
-                        break;
-                    case 4:
-                        System.out.println(name[i] + "\t\t|\t" + groesse[i] + "cm");
-                        break;
-                    case 5:
-                        System.out.println(name[i] + "\t\t\t|\t" + groesse[i] + "cm");
-                        break;
-                }
-            }else if(x[i] == 2){
-                switch(mp){
-                    case 2:
-                        System.out.println(name[i] + "\t|\t" + groesse[i] + "cm");
-                        break;
-                    case 3:
-                        System.out.println(name[i] + "\t\t|\t" + groesse[i] + "cm");
-                        break;
-                    case 4:
-                        System.out.println(name[i] + "\t\t\t|\t" + groesse[i] + "cm");
-                        break;
-                    case 5:
-                        System.out.println(name[i] + "\t\t\t\t|\t" + groesse[i] + "cm");
-                        break;
-                }
-            }else if(x[i] == 1){
-                switch(mp){
-                    case 1:
-                        System.out.println(name[i] + "\t|\t" + groesse[i] + "cm");
-                        break;
-                    case 2:
-                        System.out.println(name[i] + "\t\t|\t" + groesse[i] + "cm");
-                        break;
-                    case 3:
-                        System.out.println(name[i] + "\t\t\t|\t" + groesse[i] + "cm");
-                        break;
-                    case 4:
-                        System.out.println(name[i] + "\t\t\t\t|\t" + groesse[i] + "cm");
-                        break;
-                    case 5:
-                        System.out.println(name[i] + "\t\t\t\t\t|\t" + groesse[i] + "cm");
-                        break;
-                }
-            }else if(x[i] == 0){
-                switch(mp){
-                    case 0:
-                        System.out.println(name[i] + "\t|\t" + groesse[i] + "cm");
-                        break;
-                    case 1:
-                        System.out.println(name[i] + "\t\t|\t" + groesse[i] + "cm");
-                        break;
-                    case 2:
-                        System.out.println(name[i] + "\t\t\t|\t" + groesse[i] + "cm");
-                        break;
-                    case 3:
-                        System.out.println(name[i] + "\t\t\t\t|\t" + groesse[i] + "cm");
-                        break;
-                    case 4:
-                        System.out.println(name[i] + "\t\t\t\t\t|\t" + groesse[i] + "cm");
-                        break;
-                    case 5:
-                        System.out.println(name[i] + "\t\t\t\t\t\t|\t" + groesse[i] + "cm");
-                        break;
-                }
-            }
+            int mkDyn = mp - x[i];
+            System.out.println(name[i] + mkDynamic(txtBaseT, txtExtendedT, mkDyn) + "|    " + groesse[i] + " m");
         }
+        System.out.println(mkDynamic(txtBaseH, txtExtendedH, (mp)));        
+        System.out.println("Durchschnitt:" + mkDynamic(txtBaseT, txtExtendedT, (mp-1)) + "|    " + avg + " m");
     }
     
     public static void main(String[] args){
@@ -180,6 +107,7 @@ public class _01_02_Array{
             koerpergroesse[i] = koerpergroesseEingeben(txt4);
         }
         int mp = getMaxParts(x);
-        ausgabeTabelle(x, mp, name, koerpergroesse);
+        double avg = durchschnittErmitteln(koerpergroesse);
+        ausgabeTabelle(x, mp, name, koerpergroesse, avg);
     }
 }
