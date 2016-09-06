@@ -10,16 +10,8 @@ public class _17_06_100Zellen{
     public static boolean[] getCrazy(boolean[] zelle){
         for(int i = 0; i < zelle.length; i++){
             for(int j = i; j < zelle.length; j+=i+1){
-//            int x = i;
-//            for(int j = 0; j < zelle.length; j++){
-//                x += j;
-//                if(x > 99){
-//                    break;
-//                }
-//                System.out.print(j + " ");
                 zelle[j] = !zelle[j];
             }
-//            System.out.println();
         }
         return zelle;
     }
