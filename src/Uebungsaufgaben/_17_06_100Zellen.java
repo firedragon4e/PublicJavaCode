@@ -7,7 +7,7 @@ import java.util.Arrays;
  */
 public class _17_06_100Zellen{
     
-    public static boolean[] getCrazy(boolean[] zelle){
+    public static boolean[] reverse(boolean[] zelle){
         for(int i = 0; i < zelle.length; i++){
             for(int j = i; j < zelle.length; j+=i+1){
                 zelle[j] = !zelle[j];
@@ -32,7 +32,7 @@ public class _17_06_100Zellen{
     public static void main(String[] args){
         boolean[] zelle = new boolean[100];
         Arrays.fill(zelle, true);
-        zelle = getCrazy(zelle);
+        zelle = reverse(zelle);
         output(zelle);
     }
 }
