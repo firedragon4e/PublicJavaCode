@@ -1,7 +1,7 @@
 package Uebungsaufgaben;
 
 import static MiniPrograms.GetInput.scanner;
-import java.util.Arrays;
+
 /**
  *
  * @author firedragon4e
@@ -17,6 +17,7 @@ public class Umsatzrechner{
                 umsaetze[i][j] = Double.parseDouble(scanner("Geben Sie den Umsatz f\u00FCr " + (j+1) + ". Quartal/Monat des " + (i+1) + ". Jahres ein."));
             }
         }
+        //Kann man auch in der main-Methode machen. Schaut die auskommentierte code in der main-Methode!
         umsaetze = getDurchschnitt(getSumme(getJahresumsatz(umsaetze)));
         return umsaetze;
     }
@@ -31,7 +32,7 @@ public class Umsatzrechner{
         }
         return umsaetze;
     }
-    
+  
     public static double[][] getSumme(double[][] umsaetze){
         int x = umsaetze[0].length-1, y = umsaetze.length-1;
         for(int i = 0; i < x; i++){
@@ -80,6 +81,9 @@ public class Umsatzrechner{
     
     public static void main(String[] args){
         double[][] umseatze = setTabelle();
+//        umseatze = getJahresumsatz(umseatze);
+//        umseatze = getSumme(umseatze);
+//        umseatze = getDurchschnitt(umseatze);
         output(umseatze);
     }
 }
