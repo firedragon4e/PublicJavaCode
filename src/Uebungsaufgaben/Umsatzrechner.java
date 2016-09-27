@@ -14,7 +14,8 @@ public class Umsatzrechner{
         double[][] umsaetze = new double[x][y];
         for(int i = 0; i < umsaetze.length-1; i++){
             for(int j = 0; j < umsaetze[i].length-2; j++){
-                umsaetze[i][j] = Double.parseDouble(scanner("Geben Sie den Umsatz f\u00FCr " + (j+1) + ". Quartal/Monat des " + (i+1) + ". Jahres ein."));
+                umsaetze[i][j] = Double.parseDouble(scanner("Geben Sie den Umsatz f\u00FCr " + 
+                        (j+1) + ". Quartal/Monat des " + (i+1) + ". Jahres ein."));
             }
         }
         //Kann man auch in der main-Methode machen. Schaut die auskommentierte code in der main-Methode!
