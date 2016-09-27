@@ -1,6 +1,8 @@
 package Uebungsaufgaben;
 
 import static MiniPrograms.GetInput.scanner;
+import static MiniPrograms.StringMultiplier.multiply;
+import static MiniPrograms.GetLength.setLength;
 
 /**
  *
@@ -9,7 +11,7 @@ import static MiniPrograms.GetInput.scanner;
 
 public class ZahlenSortieren{
     public static int[] setArr(){
-//        int[] arr = {18, 5, 22, 3, 45, 34};
+//        int[] arr = {18, 5, 22, 3, 45, 34, 1231, 123235, 2345256};
         int x = Integer.parseInt(scanner("Wieviele Zahlen enth\u00E4lt die Zahlenfolge?"));
         int[] arr = new int[x];
         for (int i = 0; i < arr.length; i++){
@@ -48,20 +50,22 @@ public class ZahlenSortieren{
     }
     
     public static void output(int[] arr){
-        System.out.println("******************************************");
+        String sep = "********";
+        String div = multiply(sep, arr.length) + "\b";
+        System.out.println(div);
         for(int i : arr){
             System.out.print(i + "\t");
         }
-        System.out.println("\n******************************************");
+        System.out.println("\n" + div);
     }
     
     public static void main(String[] args){
         int[] arr = setArr();
-        System.out.println("\t  Gemischte Zahlenfolge");
+        System.out.println(multiply("\t", (arr.length/2-1)) + "Gemischte Zahlenfolge");
         output(arr);
         System.out.println();
         arr = check4Bigger(arr);
-        System.out.println("\t  Sortierte Zahlenfolge");
+        System.out.println(multiply("\t", (arr.length/2-1)) + "Sortierte Zahlenfolge");
         output(arr);
     }
 }
