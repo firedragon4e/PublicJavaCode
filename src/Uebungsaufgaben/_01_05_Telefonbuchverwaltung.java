@@ -17,7 +17,7 @@ public class _01_05_Telefonbuchverwaltung{
     static String answer;
     static boolean oneMore = false, again = true;
     
-    static void eintraegeEinlesen(){
+    static Eintrag[] eintraegeEinlesen(Eintrag[] telefonbuch){
         String line;
         int zeil = 1;
         try{
@@ -27,50 +27,51 @@ public class _01_05_Telefonbuchverwaltung{
                 zeil++;
                 int index, indexA, indexB,subStrA, subStrB, varA, varB;
                 String subStr, varStr;
+                
                 indexA = line.indexOf('_') + 1;
                 indexB = line.indexOf('.');
                 index = Integer.valueOf(line.substring(indexA, indexB));
+                
                 subStrA = line.indexOf('"') + 1;
                 subStrB = line.lastIndexOf('"');
+                subStr = line.substring(subStrA, subStrB);
+                
                 varA = line.indexOf('.') + 1;
                 varB = line.lastIndexOf('=');
+                varStr = line.substring(varA, varB).trim();
                 
-                if(telefonbuch[index].name == null){
+                if(telefonbuch[index].name.equals(LEER)){
                     telefonbuch[index] = new Eintrag();
                     anzahlEintraege++;
                 }
-                if(telefonbuch[index].name != null){
-                    subStr = line.substring(subStrA, subStrB);
-                    varStr = line.substring(varA, varB).trim();
-                    switch(varStr){
-                        case "name":
-                            telefonbuch[index].name = subStr;
-                            break;
-                        case "telNr":
-                            telefonbuch[index].telNr = subStr;
-                            break;
-                        case "email":
-                            telefonbuch[index].email = subStr;
-                            break;
-                        case "str":
-                            telefonbuch[index].str = subStr;
-                            break;
-                        case "hausNr":
-                            telefonbuch[index].hausNr = subStr;
-                            break;
-                        case "plz":
-                            telefonbuch[index].plz = subStr;
-                            break;
-                        case "city":
-                            telefonbuch[index].city = subStr;
-                            break;
-                        case "country":
-                            telefonbuch[index].country = subStr;
-                            break;
-                        default:
-                            System.out.println(zeil + ". Zeile enth\u00E4lt ung\u00FCltige Informationen: '" + 
-                                    line + "'");
-                    }
+                switch(varStr){
+                    case "name":
+                        telefonbuch[index].name = subStr;
+                        break;
+                    case "telNr":
+                        telefonbuch[index].telNr = subStr;
+                        break;
+                    case "email":
+                        telefonbuch[index].email = subStr;
+                        break;
+                    case "str":
+                        telefonbuch[index].str = subStr;
+                        break;
+                    case "hausNr":
+                        telefonbuch[index].hausNr = subStr;
+                        break;
+                    case "plz":
+                        telefonbuch[index].plz = subStr;
+                        break;
+                    case "city":
+                        telefonbuch[index].city = subStr;
+                        break;
+                    case "country":
+                        telefonbuch[index].country = subStr;
+                        break;
+                    default:
+                        System.out.println(zeil + ". Zeile enth\u00E4lt ung\u00FCltige Informationen: '" + 
+                                line + "'");
                 }
             }
             ausDatei.close();
@@ -81,9 +82,10 @@ public class _01_05_Telefonbuchverwaltung{
             System.out.println("Aus der Datei '" + PATH + "' kann nicht gelesen werden!");
             System.out.println(ex.toString());
         }
+        return telefonbuch;
     }
     
-    static Eintrag[] eintragEinfuegen(){
+    static Eintrag[] eintragEinfuegen(Eintrag[] telefonbuch){
         boolean doIT = false;
         int index = 0;
         if(anzahlEintraege >= telefonbuch.length){
@@ -138,7 +140,7 @@ public class _01_05_Telefonbuchverwaltung{
         return target;
     }
     
-    static void telefonbuchNachschauen(){
+    static void telefonbuchNachschauen(Eintrag[] telefonbuch){
         String NA = "ERROR 404 - Term Not Found";
         boolean doIT = false;
         String input = scanner("Geben Sie den Vor-/Nachname oder den vollst\u00E4ndigen Namen ein!");
@@ -198,13 +200,13 @@ public class _01_05_Telefonbuchverwaltung{
             telefonbuch[i] = new Eintrag();
             reset(telefonbuch[i]);
         }
-        eintraegeEinlesen();
+        telefonbuch = eintraegeEinlesen(telefonbuch);
         
         do{
             do{
                 answer = scanner("M\u00F6chten Sie einer neuen Kontakt eintragen? (j/n)");
                 if(answer.equalsIgnoreCase(POSITIV)){
-                    eintragEinfuegen();
+                    telefonbuch = eintragEinfuegen(telefonbuch);
                     oneMore = true;
                 }else{
                     oneMore = false;
@@ -214,7 +216,7 @@ public class _01_05_Telefonbuchverwaltung{
             do{
                 answer = scanner("Suchen Sie nach einem Kontakt? (j/n)");
                 if(answer.equalsIgnoreCase(POSITIV)){
-                    telefonbuchNachschauen();
+                    telefonbuchNachschauen(telefonbuch);
                     oneMore = true;
                 }else{
                     oneMore = false;
@@ -243,5 +245,6 @@ public class _01_05_Telefonbuchverwaltung{
         }while(again);
         
         output(telefonbuch);
+        System.out.println(anzahlEintraege);
     }
 }
