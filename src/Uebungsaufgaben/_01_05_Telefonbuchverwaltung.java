@@ -9,7 +9,6 @@ import java.io.*;
  */
 
 public class _01_05_Telefonbuchverwaltung{
-//    static String PATH = "C:\\MyStuff\\IT\\Java\\0_NetBeans\\Java 12 FD\\src\\Uebungsaufgaben\\Kontakte.txt";
     static String PATH = ".\\src\\Uebungsaufgaben\\Kontakte.txt";
     static Eintrag[] telefonbuch;
     static int anzahlEintraege = 0;
@@ -19,7 +18,6 @@ public class _01_05_Telefonbuchverwaltung{
     static boolean oneMore = false, again = true;
     
     static void eintraegeEinlesen(){
-//        /*
         String line;
         int zeil = 1;
         try{
