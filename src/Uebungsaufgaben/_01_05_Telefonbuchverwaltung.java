@@ -1,6 +1,8 @@
 package Uebungsaufgaben;
 
 import static MiniPrograms.GetInput.scanner;
+import java.io.*;
+import java.util.Scanner;
 
 /**
  *
@@ -8,72 +10,96 @@ import static MiniPrograms.GetInput.scanner;
  */
 
 public class _01_05_Telefonbuchverwaltung{
+//    static String PATH = "C:\\MyStuff\\IT\\Java\\0_NetBeans\\Java 12 FD\\src\\Uebungsaufgaben\\Kontakte.txt";
+    static String PATH = ".\\src\\Uebungsaufgaben\\Kontakte.txt";
     static Eintrag[] telefonbuch;
     static int anzahlEintraege = 0;
-    final static String positiv = "j";
-    final static String leer = "";
+    static final String POSITIV = "j";
+    static final String LEER = "";
     static String answer;
     static boolean oneMore = false, again = true;
     
     static void eintraegeEinlesen(){
-        telefonbuch[0] = new Eintrag();
-        telefonbuch[0].name = "Bardia Dehghanpour";
-        telefonbuch[0].telNr = "015253639476";
-        telefonbuch[0].email = "huso@gmail.com";
-        telefonbuch[0].str = "Rotweg";
-        telefonbuch[0].hausNr = "1111";
-        telefonbuch[0].plz = "99848";
-        telefonbuch[0].city = "WF";
-        telefonbuch[0].country = "DE";
-        anzahlEintraege++;
-        
-        telefonbuch[2] = new Eintrag();
-        telefonbuch[2].name = "susi";
-        telefonbuch[2].telNr = "015234356546";
-        telefonbuch[2].email = "huso@gmail.com";
-        telefonbuch[2].str = "Waldweg";
-        telefonbuch[2].hausNr = "45";
-        telefonbuch[2].plz = "99848";
-        telefonbuch[2].city = "MTL";
-        telefonbuch[2].country = "DE";
-        anzahlEintraege++;
-        
-        telefonbuch[4] = new Eintrag();
-        telefonbuch[4].name = "Daniel N";
-        telefonbuch[4].telNr = "015234356546";
-        telefonbuch[4].email = "huso@gmail.com";
-        telefonbuch[4].str = "Hinterhof";
-        telefonbuch[4].hausNr = "15";
-        telefonbuch[4].plz = "99848";
-        telefonbuch[4].city = "HU";
-        telefonbuch[4].country = "DE";
-        anzahlEintraege++;
-        
-        telefonbuch[5] = new Eintrag();
-        telefonbuch[5].name = "Denis M";
-        telefonbuch[5].telNr = "015234356546";
-        telefonbuch[5].email = "huso@gmail.com";
-        telefonbuch[5].str = "wiese";
-        telefonbuch[5].hausNr = "38";
-        telefonbuch[5].plz = "99848";
-        telefonbuch[5].city = "ESA";
-        telefonbuch[5].country = "DE";
-        anzahlEintraege++;
+//        /*
+        String line;
+        int zeil = 1;
+        try{
+            FileReader ausDatei = new FileReader(PATH);
+            BufferedReader inhaltAusDatei = new BufferedReader(ausDatei);
+            while((line = inhaltAusDatei.readLine()) != null){
+                zeil++;
+                int index, indexA, indexB,subStrA, subStrB, varA, varB;
+                String subStr, varStr;
+                indexA = line.indexOf('_') + 1;
+                indexB = line.indexOf('.');
+                index = Integer.valueOf(line.substring(indexA, indexB));
+                subStrA = line.indexOf('"') + 1;
+                subStrB = line.lastIndexOf('"');
+                varA = line.indexOf('.') + 1;
+                varB = line.lastIndexOf('=');
+                
+                if(telefonbuch[index].name == null){
+                    telefonbuch[index] = new Eintrag();
+                    anzahlEintraege++;
+                }
+                if(telefonbuch[index].name != null){
+                    subStr = line.substring(subStrA, subStrB);
+                    varStr = line.substring(varA, varB).trim();
+                    switch(varStr){
+                        case "name":
+                            telefonbuch[index].name = subStr;
+                            break;
+                        case "telNr":
+                            telefonbuch[index].telNr = subStr;
+                            break;
+                        case "email":
+                            telefonbuch[index].email = subStr;
+                            break;
+                        case "str":
+                            telefonbuch[index].str = subStr;
+                            break;
+                        case "hausNr":
+                            telefonbuch[index].hausNr = subStr;
+                            break;
+                        case "plz":
+                            telefonbuch[index].plz = subStr;
+                            break;
+                        case "city":
+                            telefonbuch[index].city = subStr;
+                            break;
+                        case "country":
+                            telefonbuch[index].country = subStr;
+                            break;
+                        default:
+                            System.out.println(zeil + ". Zeile enth\u00E4lt ung\u00FCltige Informationen: '" + 
+                                    line + "'");
+                    }
+                }
+            }
+            ausDatei.close();
+        }catch(FileNotFoundException ex){
+            System.out.println("Die Datei '" + PATH + "' wurde nicht gefunden!");
+            System.out.println(ex.toString());
+        }catch(IOException ex){
+            System.out.println("Aus der Datei '" + PATH + "' kann nicht gelesen werden!");
+            System.out.println(ex.toString());
+        }
     }
     
-    static Eintrag[] eintragEinfuegen(Eintrag[] telefonbuch){
+    static Eintrag[] eintragEinfuegen(){
         boolean doIT = false;
         int index = 0;
         if(anzahlEintraege >= telefonbuch.length){
             answer = scanner("Das Telefonbuch ist leider voll!\n"
-                    + "M\u00F6chten Sie einen Eintrag ersätzen? (j/n)");
-            if(answer.equalsIgnoreCase(positiv)){
+                    + "M\u00F6chten Sie einen Eintrag ersetzen? (j/n)");
+            if(answer.equalsIgnoreCase(POSITIV)){
                 for(int i = 0; i < telefonbuch.length; i++){
                     System.out.println((i+1) + ". Eintrag");
                     output(telefonbuch, i);
                 }
                 index = Integer.parseInt(scanner("Geben sie die Nummer des Eintrages ein!")) - 1;
                 reset(telefonbuch[index]);
+                anzahlEintraege--;
                 doIT = true;
             }
         }else{
@@ -87,6 +113,7 @@ public class _01_05_Telefonbuchverwaltung{
         }
         if(doIT){
             telefonbuch[index] = new Eintrag();
+            anzahlEintraege++;
             telefonbuch[index].name = scanner("Geben Sie den Namen ein:\t");
             telefonbuch[index].telNr = scanner("Geben Sie die Telefonnummer ein:\t");
             telefonbuch[index].email = scanner("Geben Sie die E-Mail Addrese ein:\t");
@@ -102,7 +129,7 @@ public class _01_05_Telefonbuchverwaltung{
     }
     
     static Eintrag reset(Eintrag target){
-        String reset = leer;
+        String reset = LEER;
         target.city = reset;
         target.country = reset;
         target.email = reset;
@@ -115,16 +142,16 @@ public class _01_05_Telefonbuchverwaltung{
     }
     
     static void telefonbuchNachschauen(){
-        String NA = "ERROR 404 - Eintrag Not Found";
+        String NA = "ERROR 404 - Term Not Found";
         boolean doIT = false;
         String input = scanner("Geben Sie den Vor-/Nachname oder den vollst\u00E4ndigen Namen ein!");
         for(int i = 0; i < telefonbuch.length; i++){
             if((telefonbuch[i].name.equalsIgnoreCase(input) || 
                     telefonbuch[i].name.toLowerCase().trim().indexOf(input.toLowerCase().trim()) >= 0) && 
-                    !leer.equals(telefonbuch[i].name)){
+                    !LEER.equals(telefonbuch[i].name)){
                 System.out.println("Name matches!");
                 answer = output(telefonbuch, i);
-                if(answer.equalsIgnoreCase(positiv)){
+                if(answer.equalsIgnoreCase(POSITIV)){
                     output(telefonbuch, i, true);
                     break;
                 }else{
@@ -156,19 +183,15 @@ public class _01_05_Telefonbuchverwaltung{
     static void output(Eintrag[] telefonbuch){
         String txt = "";
         for(int i = 0; i < telefonbuch.length; i++){
-            if(!telefonbuch[i].name.equals(leer)){
+            if(!telefonbuch[i].name.equals(LEER)){
                 
                 txt += (i+1) + ". Eintrag\nName:\t " + telefonbuch[i].name + "\nE-Mail:\t " + 
                         telefonbuch[i].email + "\nTel.:\t " + telefonbuch[i].telNr + 
                         "\nAdresse: " + telefonbuch[i].str + " " + telefonbuch[i].hausNr + 
                         "\n\t " + telefonbuch[i].plz + " " + telefonbuch[i].city + "\n\t " + 
                         telefonbuch[i].country + "\n\n";
-//                if(i < telefonbuch.length-1){
-//                    txt += "\n";
-//                }
             }
         }
-        txt += "\b";
         System.out.println(txt);
     }
     
@@ -183,8 +206,8 @@ public class _01_05_Telefonbuchverwaltung{
         do{
             do{
                 answer = scanner("M\u00F6chten Sie einer neuen Kontakt eintragen? (j/n)");
-                if(answer.equalsIgnoreCase(positiv)){
-                    eintragEinfuegen(telefonbuch);
+                if(answer.equalsIgnoreCase(POSITIV)){
+                    eintragEinfuegen();
                     oneMore = true;
                 }else{
                     oneMore = false;
@@ -193,7 +216,7 @@ public class _01_05_Telefonbuchverwaltung{
 
             do{
                 answer = scanner("Suchen Sie nach einem Kontakt? (j/n)");
-                if(answer.equalsIgnoreCase(positiv)){
+                if(answer.equalsIgnoreCase(POSITIV)){
                     telefonbuchNachschauen();
                     oneMore = true;
                 }else{
@@ -203,7 +226,7 @@ public class _01_05_Telefonbuchverwaltung{
 
             do{
                 answer = scanner("M\u00F6chten Sie einen Eintrag l\u00F6schen? (j/n)");
-                if(answer.equalsIgnoreCase(positiv)){
+                if(answer.equalsIgnoreCase(POSITIV)){
                     output(telefonbuch);
                     int index = Integer.parseInt(scanner("Welches Eintrag m\u00F6chten Sie l\u00F6schen? "
                             + "(nur Nummer eingeben)!")) - 1;
@@ -216,7 +239,7 @@ public class _01_05_Telefonbuchverwaltung{
 
             if(again){
                 answer = scanner("M\u00F6chten Sie Eintragen/Suchen/L\u00F6schen wiederholen? (j/n)");
-                if(!answer.equalsIgnoreCase(positiv)){
+                if(!answer.equalsIgnoreCase(POSITIV)){
                     again = false;
                 }
             }
